@@ -1,5 +1,6 @@
 import collections
 import functools32
+#import functools
 import sympy.ntheory.factor_
 
 class Jamcoin():
@@ -19,11 +20,9 @@ def coin_jam(filename):
     minValue = int(('1' + '0'*(jamcoin_size-2) + '1'),2) - 2
 
     for x in range(1, test_cases_amount + 1):
-        #print ('Case #' + str(test_cases_amount) + ':\n')
         txt_file_result.write('Case #' + str(test_cases_amount) + ':')
-        #for y in range(1, jamcoin_amount + 1):
+
         for y in range(1, 2):
-            #print(generate_jamcoin())
             txt_file_result.write('\n' + generate_jamcoin(jamcoin_size, jamcoin_amount))
 
     txt_file_result.close
@@ -43,7 +42,7 @@ def generate_jamcoin(coin_size, amount):
 
             answer += jamcoin + '  ' + ' '.join(str(divisor) for divisor in valid_coin.divisors) + '\n'
             generated_amount += 1
-            print generated_amount
+            print (generated_amount)
 
             if generated_amount >= amount:
                 return answer
@@ -56,9 +55,7 @@ def validate_jamcoin(jamcoin):
         return validation_jamcoin
 
     for base in range(2, 11):
-        #divisor = is_prime(int(jamcoin, base))
 
-        #if divisor == -1:
         divisor = find_nontrivial_divisor(int(jamcoin, base))
         if divisor is None:
             return validation_jamcoin
@@ -73,18 +70,5 @@ def validate_jamcoin(jamcoin):
 def find_nontrivial_divisor(n):
 
     return sympy.ntheory.factor_.pollard_pm1(n, retries=5)
-
-def is_prime(n):
-
-    if n < 2:
-        return n
-    if n == 2: 
-        return -1    
-    if not n & 1: 
-        return 2
-    for x in range(3, long(n**0.5)+1, 2):
-        if n % x == 0:
-            return x
-    return -1
 
 coin_jam('C-large-practice.txt')
